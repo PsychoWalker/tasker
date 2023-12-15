@@ -1,16 +1,14 @@
-import Title from "antd/es/typography/Title";
 import React from "react";
-import { Divider } from 'antd';
-import { Typography } from 'antd';
+import {SubText, TitleApp} from "./styled";
 
-const { Text} = Typography;
-function Header() {
-    return (
-        <>
-            <Title level={1}>ToDo приложение</Title>
-            <Text>Список задач на сегодня</Text>
-        </>
-    )
+interface HeaderProps {
+    todoCount: number;
 }
 
-export default Header;
+export const Header: React.FC<HeaderProps> = ({todoCount}) => (
+        <>
+            <TitleApp level={1}>ToDo приложение</TitleApp>
+            <SubText>Список задач на сегодня {todoCount != null ? todoCount : ' пуст'}</SubText>
+        </>
+    )
+

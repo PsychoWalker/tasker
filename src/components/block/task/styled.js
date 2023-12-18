@@ -6,4 +6,11 @@ export const TaskStyled = styled.div `
     padding: 10px;
     margin-bottom: 40px;
     background: #fff;
+    width: 95%;
+  
+  & .taskFooter {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+  }
 `

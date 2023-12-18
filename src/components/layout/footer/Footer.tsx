@@ -5,10 +5,10 @@ import {FooterBlock, TextFooter} from "./styled";
 
 function Footer() {
     return (
-        <></>
-      /*  <FooterBlock>
+
+      <FooterBlock>
             <TextFooter>Сделано в 2023г.</TextFooter>
-        </FooterBlock> */
+        </FooterBlock>
     )
 }
 

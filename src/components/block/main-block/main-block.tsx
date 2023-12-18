@@ -9,15 +9,26 @@ const { Text } = Typography;
 
 interface MainProps {
     todos: Todo[];
-    addTodo: ({description}: Omit<Todo, 'isCopmlited' | 'id'>) => void;
+    addTodo: (description: string) => void;
+    checkTodo: (id: Todo['id']) => void;
+    deleteTodo: (id: Todo['id']) => void;
 }
-export const MainBlock: React.FC<MainProps> = ({todos, addTodo}) => {
+export const MainBlock: React.FC<MainProps> = ({todos, addTodo, checkTodo, deleteTodo}) => {
+    const [textareaText, setTextareaText] = useState("");
+
+    const addPostHandler = () => {
+        const newPost = {
+            value: textareaText,
+        };
+        setTextareaText("");
+        return newPost.value;
+    };
     if (todos != null) {
         return (
             <>
                 <BlockTasks>
                     {todos.map((todo) => (
-                        <Task id={todo.id} description={todo.description} isComplited={todo.isComplited} />
+                        <Task id={todo.id} currentTime={todo.currentTime} description={todo.description} isComplited={todo.isComplited} checkTodo={checkTodo} deleteTodo={deleteTodo} key={todo.id}/>
                     ))}
                 </BlockTasks>
                 <BlockCreateTask>
@@ -37,8 +48,8 @@ export const MainBlock: React.FC<MainProps> = ({todos, addTodo}) => {
                             },
                         }}
                     >
-                        <TextArea rows={4} maxLength={1000} />
-                        <Divider orientation="right">`<Button type="primary" shape="round" onClick={() => addTodo()}>Добавить задачу</Button></Divider>
+                        <TextArea rows={4} maxLength={1000} onChange={(e) => setTextareaText(e.target.value)}/>
+                        <Divider orientation="right">`<Button type="primary" shape="round" onClick={() => addTodo(addPostHandler())}>Добавить задачу</Button></Divider>
                     </ConfigProvider>
                 </BlockCreateTask>
             </>
@@ -67,8 +78,8 @@ export const MainBlock: React.FC<MainProps> = ({todos, addTodo}) => {
                         },
                     }}
                 >
-                    <TextArea rows={4} maxLength={1000} />
-                    <Divider orientation="right">`<Button type="primary" shape="round" >Добавить задачу</Button></Divider>
+                    <TextArea rows={4} maxLength={1000} onChange={(e) => setTextareaText(e.target.value)}/>
+                    <Divider orientation="right">`<Button type="primary" shape="round" onClick={() => console.log(addPostHandler())}>Добавить задачу</Button></Divider>
                 </ConfigProvider>
             </BlockCreateTask>
         </>

@@ -1,10 +1,26 @@
-import React from "react";
-import { Header } from "../header/Header";
-import Footer from "../footer/Footer";
-import { MainBlock } from "../../block/main-block/main-block";
-import { Row, Col } from "antd";
+import React, {useEffect} from "react";
+import {Header} from "../header/Header";
+import {Footer} from "../footer/Footer";
+import {MainBlock} from "../../block/main-block/main-block";
+import {Col, Row} from "antd";
 
 function WrapperPage() {
+
+    const API_KEY = "30484efec1651caf459aef4184606a95";
+
+    const state = {
+        temp: 0,
+        city: '',
+    }
+
+    const gettingWeather = async () => {
+        const api_url = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=56.85&lon=35.90&appid=${API_KEY}`);
+        const data = await api_url.json();
+
+        state.temp = Math.round(-273.15 + Number(data.main.temp));
+        state.city = data.name;
+    }
+
     const DEFAULT_TODO_LIST = [
         {
             id: 1,
@@ -16,7 +32,12 @@ function WrapperPage() {
     const [todos, setToDos] = React.useState(DEFAULT_TODO_LIST);
 
     const addTodo = ( description: string) => {
-        setToDos([...todos,  {id: todos[todos.length - 1].id + 1, description, currentTime: String(new Date()), isComplited: false}])
+        if (todos[todos.length - 1]?.id > 0) {
+            setToDos([...todos,  {id:  todos[todos.length - 1]?.id + 1, description, currentTime: String(new Date()), isComplited: false}]);
+        } else {
+            setToDos([...todos,  {id: 1, description, currentTime: String(new Date()), isComplited: false}]);
+        }
+
     }
 
     const checkTodo = (id: Todo['id']) => {
@@ -32,13 +53,17 @@ function WrapperPage() {
     const deleteTodo = (id: Todo['id']) => {
         setToDos(todos.filter(todo => todo.id !== id))
     }
+
+    useEffect(()=>{
+        gettingWeather();
+    }, []);
     return (
         <>
             <Row>
                 <Col xs={24} md={{span: 12, offset: 6}}>
                     <Header todoCount={todos.length}/>
                     <MainBlock todos={todos} addTodo={addTodo} checkTodo={checkTodo} deleteTodo={deleteTodo}/>
-                    <Footer />
+                    <Footer temp={state.temp}/>
                 </Col>
             </Row>
 

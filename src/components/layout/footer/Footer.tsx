@@ -1,13 +1,15 @@
 import React from "react";
 import {FooterBlock, TextFooter} from "./styled";
 
+interface weatherProps {
+    temp: number;
+}
 
-function Footer() {
+export const Footer: React.FC<weatherProps>  = ({temp}) => {
+    console.log(temp);
     return (
       <FooterBlock>
-            <TextFooter>Сделано в 2023г.</TextFooter>
+            <TextFooter>Погода в Твери: {temp} градусов</TextFooter>
         </FooterBlock>
     )
 }
-
-export default Footer;

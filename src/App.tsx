@@ -1,4 +1,3 @@
-import React from 'react';
 import WrapperPage from "./components/layout/wrapper/WrapperPage";
 
 function App() {

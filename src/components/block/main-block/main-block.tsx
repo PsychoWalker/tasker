@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {BlockCreateTask, BlockTasks} from "./styled";
 import {Input, Button, ConfigProvider, Divider, Typography} from "antd";
 import leaf from "../../../assets/leaf.png";

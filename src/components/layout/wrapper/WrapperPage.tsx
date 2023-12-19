@@ -37,7 +37,6 @@ function WrapperPage() {
         } else {
             setToDos([...todos,  {id: 1, description, currentTime: String(new Date()), isComplited: false}]);
         }
-
     }
 
     const checkTodo = (id: Todo['id']) => {
@@ -56,7 +55,7 @@ function WrapperPage() {
 
     useEffect(()=>{
         gettingWeather();
-    }, []);
+    });
     return (
         <>
             <Row>
